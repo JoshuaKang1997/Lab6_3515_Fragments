@@ -12,4 +12,9 @@
         android:text="Fragment 1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </FrameLayout>
