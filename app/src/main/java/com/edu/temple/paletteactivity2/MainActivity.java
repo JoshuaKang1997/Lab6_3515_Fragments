@@ -19,31 +19,37 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+       String[] color = {"White", "Blue","Green", "Magenta","Cyan","Black",
+                "Lime", "Yellow","Purple","Red"};
 
-
-    public void selectFrag(View view) {
-
-        Fragment fr;
-
-        if(view == findViewById(R.id.button)){
-            fr = new PaletteFragment();
-        }
-        else{
-            fr = new CanvasFragment();
-            
-        }
-
+       Fragment fr = PaletteFragment.newInstance(color);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment, fr);
-        transaction.addToBackStack(null);
+//        transaction.addToBackStack(null);
         transaction.commit();
-
     }
+
+
+
+//    public void selectFrag(View view) {
+//
+//        Fragment fr;
+//
+//        fr = new PaletteFragment();
+//
+//        FragmentManager manager = getSupportFragmentManager();
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        transaction.replace(R.id.fragment, fr);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+//
+//    }
 }

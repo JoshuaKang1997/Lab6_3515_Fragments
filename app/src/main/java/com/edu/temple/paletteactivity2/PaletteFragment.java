@@ -1,9 +1,10 @@
 package com.edu.temple.paletteactivity2;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,21 +34,39 @@ public class PaletteFragment extends Fragment {
         String[] colors = getResources().getStringArray(R.array.color);
         ColorAdapter adapter = new ColorAdapter(this.getActivity(), colors);
         spinner.setAdapter(adapter);
+        spinner.setSelection(0,false);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                //window.setBackgroundColor(Color.parseColor(adapterView.getItemAtPosition(position).toString()));
                 view.setBackgroundColor(Color.parseColor("White"));
-                String[] newcolorValue = {"White", "Blue","Green", "Magenta","Cyan","Black",
-                        "Lime", "Yellow","Purple","Red"};
+                String[] newcolorValue = getArguments().getStringArray("key");
+                String holder = newcolorValue[position];
+
+                Bundle bundle = new Bundle();
+                bundle.putString("color", holder);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                CanvasFragment canvasFragment = new CanvasFragment();
+                canvasFragment.setArguments(bundle);
+
+                fragmentTransaction.replace(R.id.fragment, canvasFragment);
+                fragmentTransaction.commit();
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
-
         return v;
+    }
+
+    public static PaletteFragment newInstance(String[] colorArray){
+    PaletteFragment paletteFragment = new PaletteFragment();
+    Bundle colorBundle = new Bundle();
+    colorBundle.putStringArray("key", colorArray);
+    paletteFragment.setArguments(colorBundle);
+    return paletteFragment;
     }
 }
