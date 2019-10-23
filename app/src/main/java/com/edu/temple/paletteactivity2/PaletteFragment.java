@@ -34,27 +34,26 @@ public class PaletteFragment extends Fragment {
         String[] colors = getResources().getStringArray(R.array.color);
         ColorAdapter adapter = new ColorAdapter(this.getActivity(), colors);
         spinner.setAdapter(adapter);
-        spinner.setSelection(0,false);
+        spinner.setSelection(0, false);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 view.setBackgroundColor(Color.parseColor("White"));
                 String[] newcolorValue = getArguments().getStringArray("key");
-                String holder = newcolorValue[position];
 
                 Bundle bundle = new Bundle();
-                bundle.putString("color", holder);
+                bundle.putString("color", newcolorValue[position]);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                CanvasFragment canvasFragment = new CanvasFragment();
-                canvasFragment.setArguments(bundle);
-
-                fragmentTransaction.replace(R.id.fragment, canvasFragment);
+                Fragment cfr = CanvasFragment.newInstance();
+                cfr.setArguments(bundle);
+                fragmentTransaction.replace(R.id.fragment3, cfr);
                 fragmentTransaction.commit();
 
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -62,11 +61,11 @@ public class PaletteFragment extends Fragment {
         return v;
     }
 
-    public static PaletteFragment newInstance(String[] colorArray){
-    PaletteFragment paletteFragment = new PaletteFragment();
-    Bundle colorBundle = new Bundle();
-    colorBundle.putStringArray("key", colorArray);
-    paletteFragment.setArguments(colorBundle);
-    return paletteFragment;
+    public static PaletteFragment newInstance(String[] colorArray) {
+        PaletteFragment paletteFragment = new PaletteFragment();
+        Bundle colorBundle = new Bundle();
+        colorBundle.putStringArray("key", colorArray);
+        paletteFragment.setArguments(colorBundle);
+        return paletteFragment;
     }
 }
